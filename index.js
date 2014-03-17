@@ -26,7 +26,9 @@ module.exports = function (options) {
       this.emit('error', new gutil.PluginError('gulp-stylestats', 'Streaming not supported'));
       return callback();
     }
-    this.push(file);
+
+    var that = this;
+
     var stylestats = new StyleStats(file.path, options.config);
     stylestats.parse(function (result) {
       switch (options.extension) {
@@ -43,13 +45,15 @@ module.exports = function (options) {
             }
             console.log(csv);
           });
-        default :
+        default:
+          gutil.log('gulp-stylestats: Statistics of ' + gutil.colors.green(gutil.colors.green(file.path.replace(file.cwd, ''))));
           prettyLog(result, options.simple);
           break;
       }
+      that.push(file);
+      callback();
     });
   }, function (callback) {
-    gutil.log('gulp-stylestats: ' + gutil.colors.green(''));
     callback();
   });
 };
@@ -82,5 +86,5 @@ function prettyLog(result, simple) {
     }
     table.push(stats);
   });
-  console.log('StyleStats!\n' + table.toString());
+  console.log(table.toString());
 }
