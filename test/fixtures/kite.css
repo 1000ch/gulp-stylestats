@@ -1,6 +1,10 @@
 /*
+
+ kitecss is Light weight & robust layout helper CSS Framework by @hiloki
+ Licensed under the MIT License.
  @see https://github.com/hiloki/kitecss
- */
+
+*/
 
 .grid {
   display: table;
