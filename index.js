@@ -7,8 +7,6 @@ var _ = require('underscore');
 _.str = require('underscore.string');
 _.mixin(_.str.exports());
 _.str.include('Underscore.string', 'string');
-var fs = require('graceful-fs');
-var map = require('map-stream');
 var gutil = require('gulp-util');
 var through = require('through2');
 var StyleStats = require('stylestats');
@@ -27,44 +25,61 @@ module.exports = function (options) {
       return callback();
     }
 
-    var that = this;
-
     var stylestats = new StyleStats(file.path, options.config);
-    stylestats.parse(function (result) {
-      switch (options.extension) {
+    stylestats.parse(function(result) {
+      switch (options.type) {
         case 'json':
-          var output = JSON.stringify(result, null, 2);
-          console.log(output);
+          var json = JSON.stringify(result, null, 2);
+          console.log(json);
+          break;
         case 'csv':
+          Object.keys(result).forEach(function(key) {
+            result[key] = Array.isArray(result[key]) ? result[key].join(' ') : result[key];
+          });
           json2csv({
             data: result,
             fields: Object.keys(result)
-          }, function (error, csv) {
-            if (error) {
-              throw error;
-            }
+          }, function(err, csv) {
             console.log(csv);
           });
+          break;
+        case 'html':
+          var template = path.join(__dirname, '../assets/stats.jade');
+          var html = jade.renderFile(template, {
+            pretty: true,
+            stats: prettify(result),
+            published: result.published,
+            paths: result.paths
+          });
+          console.log(html);
+          break;
         default:
-          gutil.log('gulp-stylestats: Statistics of ' + gutil.colors.green(gutil.colors.green(file.path.replace(file.cwd, ''))));
-          prettyLog(result, options.simple);
+          var table = new Table({
+            style: {
+              head: ['cyan'],
+              compact: options.simple
+            }
+          });
+          prettify(result).forEach(function(data) {
+            table.push(data);
+          });
+          console.log(' StyleStats!\n' + table.toString());
           break;
       }
-      that.push(file);
-      callback();
     });
+    callback();
   }, function (callback) {
     callback();
   });
 };
 
-function prettyLog(result, simple) {
-  var table = new Table({
-    style: {
-      head: ['cyan'],
-      compact: simple
-    }
-  });
+/**
+ * Prettify StyleStats data.
+ * @param {object} [result] StyleStats parse data. Required.
+ * @return {array} prettified data.
+ */
+function prettify(result) {
+  var collections = [];
   Object.keys(result).forEach(function(key) {
     var stats = {};
     var prop = _(_(key).humanize()).titleize();
@@ -74,17 +89,19 @@ function prettyLog(result, simple) {
         array.push([item.property, item.count]);
       });
       stats[prop] = array.join('\n').replace(/\,/g, ': ');
-    } else if (key === 'size' || key === 'gzippedSize') {
-      stats[prop] = numeral(result[key]).format('0.0b');
-    } else if (key === 'simplicity') {
+    } else if (key === 'size' || key === 'gzippedSize' || key === 'dataUriSize') {
+      stats[prop] = numeral(result[key]).format('0.0b').replace(/\.0B/, 'B').replace(/0\.0/, '0');
+    } else if (key === 'simplicity' || key === 'ratioOfDataUriSize') {
       stats[prop] = numeral(result[key]).format('0.00%');
+    } else if (key === 'published' || key === 'paths') {
+      return true;
     } else {
       stats[prop] = Array.isArray(result[key]) ? result[key].join('\n') : result[key];
       if (stats[prop] === '') {
         stats[prop] = 'N/A';
       }
     }
-    table.push(stats);
+    collections.push(stats);
   });
-  console.log(table.toString());
+  return collections;
 }
