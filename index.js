@@ -67,8 +67,9 @@ module.exports = function (options) {
           console.log(' StyleStats!\n' + table.toString());
           break;
       }
+      that.push(file);
+      callback();
     });
-    callback();
   }, function (callback) {
     callback();
   });
