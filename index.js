@@ -12,9 +12,9 @@ var through = require('through2');
 var StyleStats = require('stylestats');
 
 module.exports = function (options) {
-  
+
   options = options || {};
-  
+
   return through.obj(function (file, encode, callback) {
     if (file.isNull()) {
       this.push(file);
@@ -25,9 +25,10 @@ module.exports = function (options) {
       return callback();
     }
 
-    var stylestats = new StyleStats(file.path, options.config);
-    stylestats.parse(function(result) {
-      switch (options.type) {
+    var that = this;
+    var stylestats = new StyleStats(file.contents.toString(), options.config);
+    stylestats.parse(function (result) {
+      switch (options.extension) {
         case 'json':
           var json = JSON.stringify(result, null, 2);
           console.log(json);
