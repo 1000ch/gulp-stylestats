@@ -2,7 +2,7 @@
 
 ## About
 
-[![Build Status](https://travis-ci.org/1000ch/gulp-stylestats.png?branch=master)](https://travis-ci.org/1000ch/gulp-stylestats)
+[![Build Status](https://travis-ci.org/1000ch/gulp-stylestats.svg?branch=master)](https://travis-ci.org/1000ch/gulp-stylestats)
 [![NPM version](https://badge.fury.io/js/gulp-stylestats.png)](http://badge.fury.io/js/gulp-stylestats)
 [![Dependency Status](https://david-dm.org/1000ch/gulp-stylestats.png)](https://david-dm.org/1000ch/gulp-stylestats)
 [![devDependency Status](https://david-dm.org/1000ch/gulp-stylestats/dev-status.png)](https://david-dm.org/1000ch/gulp-stylestats#info=devDependencies)
