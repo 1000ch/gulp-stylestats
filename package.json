@@ -14,15 +14,14 @@
     "test": "mocha test/test.js"
   },
   "dependencies": {
+    "stylestats": "^4.0.0",
+    "gulp": "^3.6.0",
     "gulp-util": "^2.2.14",
-    "gulp": "^3.5.6",
-    "lodash": "^2.4.1",
-    "through2": "^0.4.1",
-    "numeral": "^1.5.3",
     "cli-table": "^0.3.0",
+    "numeral": "^1.5.3",
+    "through2": "^0.4.1",
     "json2csv": "^2.2.1",
-    "moment": "^2.5.1",
-    "stylestats": "^4.0.0"
+    "moment": "^2.5.1"
   },
   "devDependencies": {
     "mocha": "^1.18.2"
