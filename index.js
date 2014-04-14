@@ -29,7 +29,7 @@ module.exports = function (options) {
     var that = this;
     var stylestats = new StyleStats(file.contents.toString(), options.config);
     stylestats.parse(function (result) {
-      switch (options.extension) {
+      switch (options.type) {
         case 'json':
           var json = JSON.stringify(result, null, 2);
           console.log(json);
