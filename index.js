@@ -63,7 +63,7 @@ module.exports = function (options) {
             }
           });
           prettify(result).forEach(function(data) {
-            table.push(data);
+            table.push([data.prop, data.value]);
           });
           console.log(' StyleStats!\n' + table.toString());
           break;
