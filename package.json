@@ -1,6 +1,6 @@
 {
   "name": "gulp-stylestats",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/1000ch/gulp-stylestats.git"
@@ -19,7 +19,7 @@
     "json2csv": "^2.2.1",
     "moment": "^2.7.0",
     "numeral": "^1.5.3",
-    "stylestats": "^4.1.0",
+    "stylestats": "^4.1.1",
     "through2": "^0.5.1"
   },
   "devDependencies": {
