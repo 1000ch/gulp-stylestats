@@ -14,16 +14,16 @@
     "test": "mocha test/test.js"
   },
   "dependencies": {
-    "cli-table": "^0.3.0",
+    "cli-table": "^0.3.1",
     "gulp-util": "^3.0.1",
     "json2csv": "^2.2.1",
-    "moment": "^2.8.1",
+    "moment": "^2.8.3",
     "numeral": "^1.5.3",
     "stylestats": "^4.1.4",
-    "through2": "^0.6.2"
+    "through2": "^0.6.3"
   },
   "devDependencies": {
-    "mocha": "^1.21.4"
+    "mocha": "^2.0.1"
   },
   "keywords": [
     "gulpplugin",
