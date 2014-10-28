@@ -7,13 +7,21 @@
 [![Dependency Status](https://david-dm.org/1000ch/gulp-stylestats.svg)](https://david-dm.org/1000ch/gulp-stylestats)
 [![devDependency Status](https://david-dm.org/1000ch/gulp-stylestats/dev-status.svg)](https://david-dm.org/1000ch/gulp-stylestats#info=devDependencies)
 
+## Install
+
+Install via [npm](https://npmjs.org/package/gulp-stylestats):
+
+```
+npm install gulp-stylestats --save-dev
+```
+
 ## Usage
 
 This is `gulpfile.js` sample.
 
 ```js
 var gulp = require('gulp');
-var stylestats = require('../');
+var stylestats = require('gulp-stylestats');
 
 gulp.task('stylestats', function () {
   gulp.src('./fixtures/*.css')
