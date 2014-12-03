@@ -11,6 +11,8 @@ module.exports = function (options) {
   options = options || {};
 
   return through.obj(function (file, encode, callback) {
+    
+    var that = this;
 
     if (file.isNull()) {
       this.push(file);
@@ -18,18 +20,35 @@ module.exports = function (options) {
     }
 
     if (file.isStream()) {
-      this.emit('error', new gutil.PluginError('gulp-stylestats', 'Streaming not supported'));
+      this.emit('error', new gutil.PluginError('gulp-stylestats', 'Streaming is not supported'));
       return callback();
     }
 
-    var that = this;
+    var filePath = file.path;
+    
     var stylestats = new StyleStats(file.contents.toString(), options.config);
     stylestats.parse(function (error, result) {
+      
+      if (error) {
+        that.push(file);
+        return callback(new gutil.PluginError('gulp-stylestats', error, {
+          fileName: filePath
+        }));
+      }
+      
       switch (options.type) {
         case 'json':
           var json = JSON.stringify(result, null, 2);
-          console.log(json);
-          break;
+
+          if (options.outfile) {
+            file.contents = new Buffer(json);
+            file.path = gutil.replaceExtension(file.path, '.json');
+          } else {
+            console.log(json);
+          }
+          
+          that.push(file);
+          return callback();
         case 'csv':
           var json2csv = require('json2csv');
 
@@ -41,7 +60,16 @@ module.exports = function (options) {
             data: result,
             fields: Object.keys(result)
           }, function(err, csv) {
-            console.log(csv);
+
+            if (options.outfile) {
+              file.contents = new Buffer(csv);
+              file.path = gutil.replaceExtension(file.path, '.csv');
+            } else {
+              console.log(csv);
+            }
+
+            that.push(file);
+            return callback();
           });
           break;
         case 'html':
@@ -49,8 +77,8 @@ module.exports = function (options) {
           var path = require('path');
           var _    = require('underscore');
 
-          var file = path.join(__dirname, '/node_modules/stylestats/assets/stats.template');
-          var template = _.template(fs.readFileSync(file, {
+          var templatePath = path.join(__dirname, '/node_modules/stylestats/assets/stats.template');
+          var template = _.template(fs.readFileSync(templatePath, {
             encoding: 'utf8'
           }));
 
@@ -60,8 +88,16 @@ module.exports = function (options) {
             published: result.published,
             paths: result.paths
           });
-          console.log(html);
-          break;
+
+          if (options.outfile) {
+            file.contents = new Buffer(html);
+            file.path = gutil.replaceExtension(file.path, '.html');
+          } else {
+            console.log(html);
+          }
+
+          that.push(file);
+          return callback();
         default:
           var Table = require('cli-table');
 
@@ -75,12 +111,18 @@ module.exports = function (options) {
           prettify(result).forEach(function(data) {
             table.push(data);
           });
+          
+          var text = table.toString();
 
-          console.log(' StyleStats!\n' + table.toString());
-          break;
+          if (options.outfile) {
+            
+          } else {
+            console.log('StyleStats!\n' + text);
+          }
+
+          that.push(file);
+          return callback();
       }
-      that.push(file);
-      callback();
     });
   }, function (callback) {
     callback();

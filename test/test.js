@@ -7,20 +7,12 @@ var gutil = require('gulp-util');
 var stylestats = require('../');
 
 describe('gulp-stylestats', function () {
-
+  
   it('should log css statistics', function (done) {
 
     var count = 0;
-    var cssPath = path.join(__dirname, 'fixtures/test.css');
-
-    var file = new gutil.File({
-      path: cssPath,
-      cwd: 'test/',
-      base: path.dirname(cssPath),
-      contents: fs.readFileSync(cssPath)
-    });
-
     var stream = stylestats();
+    var fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -31,31 +23,20 @@ describe('gulp-stylestats', function () {
       done();
     });
 
-    stream.write(file);
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
     stream.end();
   });
   
   it('should log multiple css statistics', function (done) {
 
     var count = 0;
-    var cssPath1 = path.join(__dirname, 'fixtures/test.css');
-    var cssPath2 = path.join(__dirname, 'fixtures/kite.css');
-
-    var file1 = new gutil.File({
-      path: cssPath1,
-      cwd: 'test/',
-      base: path.dirname(cssPath1),
-      contents: fs.readFileSync(cssPath1)
-    });
-
-    var file2 = new gutil.File({
-      path: cssPath2,
-      cwd: 'test/',
-      base: path.dirname(cssPath2),
-      contents: fs.readFileSync(cssPath2)
-    });
-
     var stream = stylestats();
+    var fp1 = path.join(__dirname, 'fixtures/test.css');
+    var fp2 = path.join(__dirname, 'fixtures/kite.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -66,26 +47,26 @@ describe('gulp-stylestats', function () {
       done();
     });
 
-    stream.write(file1);
-    stream.write(file2);
+    stream.write(new gutil.File({
+      path: fp1,
+      contents: fs.readFileSync(fp1)
+    }));
+
+    stream.write(new gutil.File({
+      path: fp2,
+      contents: fs.readFileSync(fp2)
+    }));
+
     stream.end();
   });
 
-  it('should log css statistics as json', function (done) {
+  it('should log css statistics as JSON', function (done) {
 
     var count = 0;
-    var cssPath = path.join(__dirname, 'fixtures/test.css');
-
-    var file = new gutil.File({
-      path: cssPath,
-      cwd: 'test/',
-      base: path.dirname(cssPath),
-      contents: fs.readFileSync(cssPath)
-    });
-
     var stream = stylestats({
       type: 'json'
     });
+    var fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -96,54 +77,21 @@ describe('gulp-stylestats', function () {
       done();
     });
 
-    stream.write(file);
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
     stream.end();
   });
 
-  it('should log css statistics as csv', function (done) {
+  it('should log css statistics as CSV', function (done) {
 
     var count = 0;
-    var cssPath = path.join(__dirname, 'fixtures/test.css');
-
-    var file = new gutil.File({
-      path: cssPath,
-      cwd: 'test/',
-      base: path.dirname(cssPath),
-      contents: fs.readFileSync(cssPath)
-    });
-
     var stream = stylestats({
       type: 'csv'
     });
-
-    stream.on('data', function (newFile) {console.log('csv ondata', newFile);
-      count++;
-    });
-
-    stream.on('end', function (error) {
-      assert.strictEqual(count, 1);
-      done();
-    });
-
-    stream.write(file);
-    stream.end();
-  });
-
-  it('should log css statistics as html', function (done) {
-
-    var count = 0;
-    var cssPath = path.join(__dirname, 'fixtures/test.css');
-
-    var file = new gutil.File({
-      path: cssPath,
-      cwd: 'test/',
-      base: path.dirname(cssPath),
-      contents: fs.readFileSync(cssPath)
-    });
-
-    var stream = stylestats({
-      type: 'html'
-    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -154,7 +102,36 @@ describe('gulp-stylestats', function () {
       done();
     });
 
-    stream.write(file);
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should log css statistics as HTML', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'html'
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+
+    stream.on('data', function (data) {
+      count++;
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
     stream.end();
   });
 });
