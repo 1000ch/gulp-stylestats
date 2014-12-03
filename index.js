@@ -80,6 +80,8 @@ module.exports = function (options) {
         default:
           format.toTable(function (table) {
             if (options.outfile) {
+              file.contents = new Buffer(table);
+              file.path = gutil.replaceExtension(file.path, '.txt');
             } else {
               console.log('StyleStats!\n' + table);
             }
