@@ -1,7 +1,5 @@
 'use strict';
 
-var Table = require('cli-table');
-var json2csv = require('json2csv');
 var gutil = require('gulp-util');
 var through = require('through2');
 
@@ -27,15 +25,18 @@ module.exports = function (options) {
     var that = this;
     var stylestats = new StyleStats(file.contents.toString(), options.config);
     stylestats.parse(function (error, result) {
-      switch (options.type) {
+      switch (options.type.toLowerCase()) {
         case 'json':
           var json = JSON.stringify(result, null, 2);
           console.log(json);
           break;
         case 'csv':
+          var json2csv = require('json2csv');
+
           Object.keys(result).forEach(function(key) {
             result[key] = Array.isArray(result[key]) ? result[key].join(' ') : result[key];
           });
+
           json2csv({
             data: result,
             fields: Object.keys(result)
@@ -44,8 +45,16 @@ module.exports = function (options) {
           });
           break;
         case 'html':
-          var template = path.join(__dirname, '../assets/stats.jade');
-          var html = jade.renderFile(template, {
+          var fs   = require('fs');
+          var path = require('path');
+          var _    = require('underscore');
+
+          var file = path.join(__dirname, '/node_modules/stylestats/assets/stats.template');
+          var template = _.template(fs.readFileSync(file, {
+            encoding: 'utf8'
+          }));
+
+          var html = template({
             pretty: true,
             stats: prettify(result),
             published: result.published,
@@ -54,15 +63,19 @@ module.exports = function (options) {
           console.log(html);
           break;
         default:
+          var Table = require('cli-table');
+
           var table = new Table({
             style: {
               head: ['cyan'],
               compact: options.simple
             }
           });
+
           prettify(result).forEach(function(data) {
             table.push(data);
           });
+
           console.log(' StyleStats!\n' + table.toString());
           break;
       }
