@@ -52,6 +52,7 @@ module.exports = function (options) {
             that.push(file);
             return callback();
           });
+          break;
         case 'csv':
           format.toCSV(function (csv) {
             if (options.outfile) {
@@ -77,6 +78,8 @@ module.exports = function (options) {
             that.push(file);
             return callback();
           });
+          break;
+        case 'table':
         default:
           format.toTable(function (table) {
             if (options.outfile) {
