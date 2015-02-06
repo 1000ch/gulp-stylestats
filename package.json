@@ -1,6 +1,6 @@
 {
   "name": "gulp-stylestats",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/1000ch/gulp-stylestats.git"
@@ -11,7 +11,9 @@
   "description": "Gulp task for StyleStats",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout=3000 --reporter=spec test/test.js"
+    "build": "6to5 src/index.js > index.js",
+    "postinstall": "npm run build",
+    "test": "npm run build && mocha --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
     "gulp-util": "^3.0.1",
@@ -19,7 +21,8 @@
     "through2": "^0.6.3"
   },
   "devDependencies": {
-    "mocha": "^2.0.1"
+    "6to5": "^3.3.12",
+    "mocha": "^2.1.0"
   },
   "keywords": [
     "gulpplugin",
