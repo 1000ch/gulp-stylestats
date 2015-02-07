@@ -50,6 +50,9 @@ const outputHTML = function (that, options, file, result, callback) {
   const _    = require('underscore');
 
   let templatePath = path.join(__dirname, '/node_modules/stylestats/assets/stats.template');
+  if (!fs.existsSync(templatePath)) {
+    templatePath = path.resolve(__dirname, '../stylestats/assets/stats.template');
+  }
   let template = _.template(fs.readFileSync(templatePath, {
     encoding: 'utf8'
   }));
@@ -100,7 +103,7 @@ const outputTable = function (that, options, file, result, callback) {
 module.exports = (options = {}) => {
 
   return through.obj(function (file, encode, callback) {
-    
+
     if (file.isNull()) {
       this.push(file);
       return callback();
