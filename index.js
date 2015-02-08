@@ -49,6 +49,9 @@ var outputHTML = function (that, options, file, result, callback) {
   var _ = require("underscore");
 
   var templatePath = path.join(__dirname, "/node_modules/stylestats/assets/stats.template");
+  if (!fs.existsSync(templatePath)) {
+    templatePath = path.resolve(__dirname, "../stylestats/assets/stats.template");
+  }
   var template = _.template(fs.readFileSync(templatePath, {
     encoding: "utf8"
   }));
