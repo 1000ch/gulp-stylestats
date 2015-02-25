@@ -16,12 +16,9 @@
     "test": "npm run build && mocha --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
-    "cli-table": "^0.3.1",
     "gulp-util": "^3.0.4",
-    "json2csv": "^2.2.1",
     "stylestats": "^5.0.0",
-    "through2": "^0.6.3",
-    "underscore": "^1.8.2"
+    "through2": "^0.6.3"
   },
   "devDependencies": {
     "babel": "^4.5.1",
