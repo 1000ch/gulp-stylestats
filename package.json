@@ -1,6 +1,6 @@
 {
   "name": "gulp-stylestats",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/1000ch/gulp-stylestats.git"
