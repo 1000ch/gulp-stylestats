@@ -2,36 +2,27 @@
 
 const gutil = require('gulp-util');
 const through = require('through2');
-
 const StyleStats = require('stylestats');
-const prettify = require('stylestats/lib/prettify');
+const Format = require('stylestats/lib/format');
 
 const outputJSON = function (that, options, file, result, callback) {
-  let json = JSON.stringify(result, null, 2);
+  let format = new Format(result);
+  format.toJSON((json) => {
+    if (options.outfile) {
+      file.contents = new Buffer(json);
+      file.path = gutil.replaceExtension(file.path, '.json');
+    } else {
+      console.log(json);
+    }
 
-  if (options.outfile) {
-    file.contents = new Buffer(json);
-    file.path = gutil.replaceExtension(file.path, '.json');
-  } else {
-    console.log(json);
-  }
-
-  that.push(file);
-  return callback();
+    that.push(file);
+    return callback();
+  });
 };
 
 const outputCSV = function (that, options, file, result, callback) {
-  const json2csv = require('json2csv');
-
-  Object.keys(result).forEach((key) => {
-    result[key] = Array.isArray(result[key]) ? result[key].join(' ') : result[key];
-  });
-
-  json2csv({
-    data: result,
-    fields: Object.keys(result)
-  }, (error, csv) => {
-
+  let format = new Format(result);
+  format.toCSV((csv) => {
     if (options.outfile) {
       file.contents = new Buffer(csv);
       file.path = gutil.replaceExtension(file.path, '.csv');
@@ -45,59 +36,33 @@ const outputCSV = function (that, options, file, result, callback) {
 };
 
 const outputHTML = function (that, options, file, result, callback) {
-  const fs   = require('fs');
-  const path = require('path');
-  const _    = require('underscore');
+  let format = new Format(result);
+  format.toHTML((html) => {
+    if (options.outfile) {
+      file.contents = new Buffer(html);
+      file.path = gutil.replaceExtension(file.path, '.html');
+    } else {
+      console.log(html);
+    }
 
-  let templatePath = path.join(__dirname, '/node_modules/stylestats/assets/stats.template');
-  if (!fs.existsSync(templatePath)) {
-    templatePath = path.resolve(__dirname, '../stylestats/assets/stats.template');
-  }
-  let template = _.template(fs.readFileSync(templatePath, {
-    encoding: 'utf8'
-  }));
-
-  let html = template({
-    pretty: true,
-    stats: prettify(result),
-    published: result.published,
-    paths: result.paths
+    that.push(file);
+    return callback();
   });
-
-  if (options.outfile) {
-    file.contents = new Buffer(html);
-    file.path = gutil.replaceExtension(file.path, '.html');
-  } else {
-    console.log(html);
-  }
-
-  that.push(file);
-  return callback();
 };
 
 const outputTable = function (that, options, file, result, callback) {
-  const Table = require('cli-table');
-
-  let table = new Table({
-    style: {
-      head: ['cyan'],
-      compact: options.simple
+  let format = new Format(result);
+  format.toTable((table) => {
+    if (options.outfile) {
+      file.contents = new Buffer(table);
+      file.path = gutil.replaceExtension(file.path, '.txt');
+    } else {
+      console.log('StyleStats!\n' + table);
     }
+
+    that.push(file);
+    return callback();
   });
-
-  prettify(result).forEach((data) => {
-    table.push(data);
-  });
-
-  if (options.outfile) {
-    file.contents = new Buffer(table);
-    file.path = gutil.replaceExtension(file.path, '.txt');
-  } else {
-    console.log('StyleStats!\n' + table);
-  }
-
-  that.push(file);
-  return callback();
 };
 
 module.exports = (options = {}) => {
