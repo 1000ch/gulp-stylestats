@@ -1,6 +1,6 @@
 {
   "name": "gulp-stylestats",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "repository": {
     "type": "git",
     "url": "git://github.com/1000ch/gulp-stylestats.git"
@@ -16,13 +16,13 @@
     "test": "mocha --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
-    "babel": "^4.5.1",
+    "babel": "^5.1.2",
     "gulp-util": "^3.0.4",
-    "stylestats": "^5.0.0",
-    "through2": "^0.6.3"
+    "stylestats": "^5.1.0",
+    "through2": "^0.6.5"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "mocha": "^2.2.4"
   },
   "keywords": [
     "gulpplugin",
