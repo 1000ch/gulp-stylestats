@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
-var gutil = require("gulp-util");
-var through = require("through2");
-var StyleStats = require("stylestats");
-var Format = require("stylestats/lib/format");
+var gutil = require('gulp-util');
+var through = require('through2');
+var StyleStats = require('stylestats');
+var Format = require('stylestats/lib/format');
 
 var outputJSON = function outputJSON(that, options, file, result, callback) {
   var format = new Format(result);
   format.toJSON(function (json) {
     if (options.outfile) {
       file.contents = new Buffer(json);
-      file.path = gutil.replaceExtension(file.path, ".json");
+      file.path = gutil.replaceExtension(file.path, '.json');
     } else {
       console.log(json);
     }
@@ -25,7 +25,7 @@ var outputCSV = function outputCSV(that, options, file, result, callback) {
   format.toCSV(function (csv) {
     if (options.outfile) {
       file.contents = new Buffer(csv);
-      file.path = gutil.replaceExtension(file.path, ".csv");
+      file.path = gutil.replaceExtension(file.path, '.csv');
     } else {
       console.log(csv);
     }
@@ -40,7 +40,7 @@ var outputHTML = function outputHTML(that, options, file, result, callback) {
   format.toHTML(function (html) {
     if (options.outfile) {
       file.contents = new Buffer(html);
-      file.path = gutil.replaceExtension(file.path, ".html");
+      file.path = gutil.replaceExtension(file.path, '.html');
     } else {
       console.log(html);
     }
@@ -55,9 +55,9 @@ var outputTable = function outputTable(that, options, file, result, callback) {
   format.toTable(function (table) {
     if (options.outfile) {
       file.contents = new Buffer(table);
-      file.path = gutil.replaceExtension(file.path, ".txt");
+      file.path = gutil.replaceExtension(file.path, '.txt');
     } else {
-      console.log("StyleStats!\n" + table);
+      console.log('StyleStats!\n' + table);
     }
 
     that.push(file);
@@ -77,7 +77,7 @@ module.exports = function () {
     }
 
     if (file.isStream()) {
-      this.emit("error", new gutil.PluginError("gulp-stylestats", "Streaming is not supported"));
+      this.emit('error', new gutil.PluginError('gulp-stylestats', 'Streaming is not supported'));
       return callback();
     }
 
@@ -89,19 +89,19 @@ module.exports = function () {
 
       if (error) {
         _this.push(file);
-        return callback(new gutil.PluginError("gulp-stylestats", error, {
+        return callback(new gutil.PluginError('gulp-stylestats', error, {
           fileName: file.path
         }));
       }
 
       switch (options.type) {
-        case "json":
+        case 'json':
           return outputJSON(_this, options, file, result, callback);
           break;
-        case "csv":
+        case 'csv':
           return outputCSV(_this, options, file, result, callback);
           break;
-        case "html":
+        case 'html':
           return outputHTML(_this, options, file, result, callback);
           break;
         default:
