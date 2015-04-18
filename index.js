@@ -5,66 +5,6 @@ var through = require('through2');
 var StyleStats = require('stylestats');
 var Format = require('stylestats/lib/format');
 
-var outputJSON = function outputJSON(that, options, file, result, callback) {
-  var format = new Format(result);
-  format.toJSON(function (json) {
-    if (options.outfile) {
-      file.contents = new Buffer(json);
-      file.path = gutil.replaceExtension(file.path, '.json');
-    } else {
-      console.log(json);
-    }
-
-    that.push(file);
-    return callback();
-  });
-};
-
-var outputCSV = function outputCSV(that, options, file, result, callback) {
-  var format = new Format(result);
-  format.toCSV(function (csv) {
-    if (options.outfile) {
-      file.contents = new Buffer(csv);
-      file.path = gutil.replaceExtension(file.path, '.csv');
-    } else {
-      console.log(csv);
-    }
-
-    that.push(file);
-    return callback();
-  });
-};
-
-var outputHTML = function outputHTML(that, options, file, result, callback) {
-  var format = new Format(result);
-  format.toHTML(function (html) {
-    if (options.outfile) {
-      file.contents = new Buffer(html);
-      file.path = gutil.replaceExtension(file.path, '.html');
-    } else {
-      console.log(html);
-    }
-
-    that.push(file);
-    return callback();
-  });
-};
-
-var outputTable = function outputTable(that, options, file, result, callback) {
-  var format = new Format(result);
-  format.toTable(function (table) {
-    if (options.outfile) {
-      file.contents = new Buffer(table);
-      file.path = gutil.replaceExtension(file.path, '.txt');
-    } else {
-      console.log('StyleStats!\n' + table);
-    }
-
-    that.push(file);
-    return callback();
-  });
-};
-
 module.exports = function () {
   var options = arguments[0] === undefined ? {} : arguments[0];
 
@@ -94,20 +34,41 @@ module.exports = function () {
         }));
       }
 
+      var format = new Format(result);
+      var extension = undefined;
+      var method = undefined;
+
       switch (options.type) {
         case 'json':
-          return outputJSON(_this, options, file, result, callback);
+          extension = '.json';
+          method = 'toJSON';
           break;
         case 'csv':
-          return outputCSV(_this, options, file, result, callback);
+          extension = '.csv';
+          method = 'toCSV';
           break;
         case 'html':
-          return outputHTML(_this, options, file, result, callback);
+          extension = '.html';
+          method = 'toHTML';
           break;
         default:
-          return outputTable(_this, options, file, result, callback);
+          extension = '.txt';
+          method = 'toTable';
           break;
       }
+
+      format[method](function (data) {
+        if (options.outfile) {
+          file.contents = new Buffer(data);
+          file.path = gutil.replaceExtension(file.path, extension);
+        } else {
+          console.log(data);
+        }
+
+        _this.push(file);
+        callback();
+        return;
+      });
     });
   }, function (callback) {
     callback();
