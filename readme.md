@@ -31,6 +31,24 @@ gulp.task('stylestats', function () {
 gulp.task('default', ['stylestats']);
 ```
 
+Output StyleStats data (sample: JSON format).
+
+```js
+var gulp = require('gulp');
+var stylestats = require('gulp-stylestats');
+
+gulp.task('stylestats', function () {
+  gulp.src('./fixtures/*.css')
+    .pipe(stylestats({
+      type: 'json',
+      outfile: true
+    }))
+    .pipe(gulp.dest('./stats/'));
+});
+
+gulp.task('default', ['stylestats']);
+```
+
 ## License
 
 MIT: http://1000ch.mit-license.org
