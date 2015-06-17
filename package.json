@@ -16,13 +16,13 @@
     "test": "mocha --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
-    "babel": "^5.3.3",
-    "gulp-util": "^3.0.4",
+    "babel": "^5.5.8",
+    "gulp-util": "^3.0.5",
     "stylestats": "^5.4.1",
-    "through2": "^0.6.5"
+    "through2": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.5"
   },
   "keywords": [
     "gulpplugin",
