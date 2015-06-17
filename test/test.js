@@ -7,7 +7,7 @@ var gutil = require('gulp-util');
 var stylestats = require('../');
 
 describe('gulp-stylestats', function () {
-  
+
   it('should log css statistics', function (done) {
 
     var count = 0;
@@ -57,7 +57,7 @@ describe('gulp-stylestats', function () {
 
     stream.end();
   });
-  
+
   it('should log multiple css statistics', function (done) {
 
     var count = 0;
@@ -227,6 +227,91 @@ describe('gulp-stylestats', function () {
     });
     var fp = path.join(__dirname, 'fixtures/test.css');
     var dest = path.join(__dirname, 'fixtures/test.html');
+
+    stream.on('data', function (file) {
+      count++;
+      assert.equal(file.path, dest);
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should log css statistics as custom template format', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'template',
+      templateFile: path.join(__dirname, 'fixtures/template.hbs')
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+
+    stream.on('data', function (data) {
+      count++;
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should create css statistics as custom template format', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'template',
+      templateFile: path.join(__dirname, 'fixtures/template.hbs'),
+      outfile: true
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+    var dest = path.join(__dirname, 'fixtures/test.html');
+
+    stream.on('data', function (file) {
+      count++;
+      assert.equal(file.path, dest);
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should create css statistics as custom template format with specific extension', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'template',
+      templateFile: path.join(__dirname, 'fixtures/template.hbs'),
+      extension: '.foo',
+      outfile: true
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+    var dest = path.join(__dirname, 'fixtures/test.foo');
 
     stream.on('data', function (file) {
       count++;
