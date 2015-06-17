@@ -4,6 +4,7 @@ const gutil = require('gulp-util');
 const through = require('through2');
 const StyleStats = require('stylestats');
 const Format = require('stylestats/lib/format');
+const fs = require('fs');
 
 module.exports = (options = {}) => {
 
@@ -48,6 +49,13 @@ module.exports = (options = {}) => {
         case 'html':
           extension = '.html';
           method = 'toHTML';
+          break;
+        case 'template':
+          format.setTemplate(fs.readFileSync(options.templateFile, {
+            encoding: 'utf8'
+          }));
+          extension = options.extension || '.html'
+          method = 'parseTemplate';
           break;
         default:
           extension = '.txt';
