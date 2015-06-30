@@ -50,6 +50,10 @@ module.exports = (options = {}) => {
           extension = '.html';
           method = 'toHTML';
           break;
+        case 'md':
+          extension = '.md';
+          method = 'toMarkdown';
+          break;
         case 'template':
           format.setTemplate(fs.readFileSync(options.templateFile, {
             encoding: 'utf8'

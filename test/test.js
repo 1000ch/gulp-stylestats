@@ -246,6 +246,59 @@ describe('gulp-stylestats', function () {
     stream.end();
   });
 
+  it('should log css statistics as Markdown', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'md'
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+
+    stream.on('data', function (data) {
+      count++;
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should create css statistics as Markdown', function (done) {
+
+    var count = 0;
+    var stream = stylestats({
+      type: 'md',
+      outfile: true
+    });
+    var fp = path.join(__dirname, 'fixtures/test.css');
+    var dest = path.join(__dirname, 'fixtures/test.md');
+
+    stream.on('data', function (file) {
+      count++;
+      assert.equal(file.path, dest);
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
   it('should log css statistics as custom template format', function (done) {
 
     var count = 0;
