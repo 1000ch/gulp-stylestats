@@ -36,7 +36,7 @@ module.exports = (options = {}) => {
       let format = new Format(result);
       let extension;
       let method;
-      
+
       switch (options.type) {
         case 'json':
           extension = '.json';
@@ -80,7 +80,5 @@ module.exports = (options = {}) => {
         return;
       });
     });
-  }, function (callback) {
-    callback();
-  });
+  }, callback => callback());
 };
