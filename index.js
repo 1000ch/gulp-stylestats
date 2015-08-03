@@ -22,9 +22,8 @@ module.exports = function () {
       return callback();
     }
 
-    var contents = file.contents.toString();
     var config = options.config;
-    var stylestats = new StyleStats(contents, config);
+    var stylestats = new StyleStats(file.path, config);
 
     stylestats.parse(function (error, result) {
 
