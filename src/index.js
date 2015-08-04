@@ -8,7 +8,7 @@ const fs = require('fs');
 
 module.exports = (options = {}) => {
 
-  return through.obj(function (file, encode, callback) {
+  return through.obj(function(file, encode, callback) {
 
     if (file.isNull()) {
       this.push(file);
@@ -20,9 +20,8 @@ module.exports = (options = {}) => {
       return callback();
     }
 
-    let contents = file.contents.toString();
     let config = options.config;
-    let stylestats = new StyleStats(contents, config);
+    let stylestats = new StyleStats(file.path, config);
 
     stylestats.parse((error, result) => {
 
@@ -58,7 +57,7 @@ module.exports = (options = {}) => {
           format.setTemplate(fs.readFileSync(options.templateFile, {
             encoding: 'utf8'
           }));
-          extension = options.extension || '.html'
+          extension = options.extension || '.html';
           method = 'parseTemplate';
           break;
         default:
