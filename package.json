@@ -13,16 +13,19 @@
   "scripts": {
     "build": "babel src/index.js > index.js",
     "postinstall": "npm run build",
-    "test": "mocha --timeout=3000 --reporter=spec test/test.js"
+    "test": "mocha --require=intelli-espower-loader --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
-    "babel": "^5.8.19",
+    "babel": "^5.8.23",
     "gulp-util": "^3.0.6",
-    "stylestats": "^5.4.2",
+    "stylestats": "^5.4.3",
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^2.2.5"
+    "espower-loader": "^1.0.0",
+    "intelli-espower-loader": "^1.0.0",
+    "mocha": "^2.2.5",
+    "power-assert": "^1.0.0"
   },
   "keywords": [
     "gulpplugin",

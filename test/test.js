@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var assert = require('assert');
+var assert = require('power-assert');
 var gutil = require('gulp-util');
 var stylestats = require('../');
 
