@@ -1,16 +1,14 @@
 'use strict';
 
-var gutil = require('gulp-util');
-var through = require('through2');
-var StyleStats = require('stylestats');
-var Format = require('stylestats/lib/format');
-var fs = require('fs');
+import fs from 'fs';
+import gutil from 'gulp-util';
+import through from 'through2';
+import StyleStats from 'stylestats';
+import Format from 'stylestats/lib/format';
 
-module.exports = function () {
-  var options = arguments[0] === undefined ? {} : arguments[0];
+export default (options = {}) => {
 
-  return through.obj(function (file, encode, callback) {
-    var _this = this;
+  return through.obj(function(file, encode, callback) {
 
     if (file.isNull()) {
       this.push(file);
@@ -22,21 +20,21 @@ module.exports = function () {
       return callback();
     }
 
-    var config = options.config;
-    var stylestats = new StyleStats(file.path, config);
+    let config = options.config;
+    let stylestats = new StyleStats(file.path, config);
 
-    stylestats.parse(function (error, result) {
+    stylestats.parse((error, result) => {
 
       if (error) {
-        _this.push(file);
+        this.push(file);
         return callback(new gutil.PluginError('gulp-stylestats', error, {
           fileName: file.path
         }));
       }
 
-      var format = new Format(result);
-      var extension = undefined;
-      var method = undefined;
+      let format = new Format(result);
+      let extension;
+      let method;
 
       switch (options.type) {
         case 'json':
@@ -68,7 +66,7 @@ module.exports = function () {
           break;
       }
 
-      format[method](function (data) {
+      format[method]((data) => {
         if (options.outfile) {
           file.contents = new Buffer(data);
           file.path = gutil.replaceExtension(file.path, extension);
@@ -76,13 +74,10 @@ module.exports = function () {
           console.log(data);
         }
 
-        _this.push(file);
+        this.push(file);
         callback();
         return;
       });
     });
-  }, function (callback) {
-    callback();
-  });
+  }, callback => callback());
 };
-
