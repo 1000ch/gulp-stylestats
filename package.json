@@ -1,5 +1,6 @@
 {
   "name": "gulp-stylestats",
+  "description": "Gulp plugin for StyleStats",
   "version": "0.8.4",
   "repository": {
     "type": "git",
@@ -8,7 +9,6 @@
   "bugs": {
     "url": "https://github.com/1000ch/gulp-stylestats/issues"
   },
-  "description": "Gulp task for StyleStats",
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "babel index.js --out-dir dist",

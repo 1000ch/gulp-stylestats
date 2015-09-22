@@ -1,6 +1,6 @@
 # [gulp-stylestats](https://npmjs.org/package/gulp-stylestats)
 
-## About
+Gulp plugin for [StyleStats](http://github.com/t32k/stylestats).
 
 [![Build Status](https://travis-ci.org/1000ch/gulp-stylestats.svg?branch=master)](https://travis-ci.org/1000ch/gulp-stylestats)
 [![NPM version](https://badge.fury.io/js/gulp-stylestats.svg)](http://badge.fury.io/js/gulp-stylestats)
