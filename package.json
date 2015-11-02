@@ -15,7 +15,8 @@
     "test": "mocha --require=intelli-espower-loader --timeout=3000 --reporter=spec test/test.js"
   },
   "dependencies": {
-    "babel": "^5.8.23",
+    "babel-cli": "^6.0.15",
+    "babel-preset-es2015": "^6.0.15",
     "gulp-util": "^3.0.6",
     "stylestats": "^6.0.0",
     "through2": "^2.0.0"
