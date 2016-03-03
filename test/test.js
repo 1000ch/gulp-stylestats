@@ -1,18 +1,16 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var gutil = require('gulp-util');
-var assert = require('power-assert');
-var stylestats = require('../').default;
+const fs = require('fs');
+const path = require('path');
+const gutil = require('gulp-util');
+const assert = require('power-assert');
+const stylestats = require('../');
 
 describe('gulp-stylestats', function () {
-
   it('should log css statistics', function (done) {
-
-    var count = 0;
-    var stream = stylestats();
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let count = 0;
+    let stream = stylestats();
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -32,13 +30,12 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.txt');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.txt');
 
     stream.on('data', function (file) {
       count++;
@@ -59,11 +56,10 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log multiple css statistics', function (done) {
-
-    var count = 0;
-    var stream = stylestats();
-    var fp1 = path.join(__dirname, 'fixtures/test.css');
-    var fp2 = path.join(__dirname, 'fixtures/kite.css');
+    let count = 0;
+    let stream = stylestats();
+    let fp1 = path.join(__dirname, 'fixtures/test.css');
+    let fp2 = path.join(__dirname, 'fixtures/kite.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -88,12 +84,11 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log css statistics as JSON', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'json'
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -113,14 +108,13 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as JSON', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'json',
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.json');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.json');
 
     stream.on('data', function (file) {
       count++;
@@ -141,12 +135,11 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log css statistics as CSV', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'csv'
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (newFile) {
       count++;
@@ -166,14 +159,13 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as CSV', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'csv',
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.csv');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.csv');
 
     stream.on('data', function (file) {
       count++;
@@ -194,12 +186,11 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log css statistics as HTML', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'html'
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (data) {
       count++;
@@ -219,14 +210,13 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as HTML', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'html',
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.html');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.html');
 
     stream.on('data', function (file) {
       count++;
@@ -247,12 +237,11 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log css statistics as Markdown', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'md'
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (data) {
       count++;
@@ -272,14 +261,13 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as Markdown', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'md',
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.md');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.md');
 
     stream.on('data', function (file) {
       count++;
@@ -300,13 +288,12 @@ describe('gulp-stylestats', function () {
   });
 
   it('should log css statistics as custom template format', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'template',
       templateFile: path.join(__dirname, 'fixtures/template.hbs')
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
+    let fp = path.join(__dirname, 'fixtures/test.css');
 
     stream.on('data', function (data) {
       count++;
@@ -326,15 +313,14 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as custom template format', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'template',
       templateFile: path.join(__dirname, 'fixtures/template.hbs'),
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.html');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.html');
 
     stream.on('data', function (file) {
       count++;
@@ -355,16 +341,15 @@ describe('gulp-stylestats', function () {
   });
 
   it('should create css statistics as custom template format with specific extension', function (done) {
-
-    var count = 0;
-    var stream = stylestats({
+    let count = 0;
+    let stream = stylestats({
       type: 'template',
       templateFile: path.join(__dirname, 'fixtures/template.hbs'),
       extension: '.foo',
       outfile: true
     });
-    var fp = path.join(__dirname, 'fixtures/test.css');
-    var dest = path.join(__dirname, 'fixtures/test.foo');
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.foo');
 
     stream.on('data', function (file) {
       count++;

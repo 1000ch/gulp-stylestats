@@ -20,8 +20,8 @@ npm install gulp-stylestats --save-dev
 This is `gulpfile.js` sample.
 
 ```js
-var gulp = require('gulp');
-var stylestats = require('gulp-stylestats');
+const gulp = require('gulp');
+const stylestats = require('gulp-stylestats');
 
 gulp.task('stylestats', function () {
   gulp.src('./fixtures/*.css')
@@ -34,8 +34,8 @@ gulp.task('default', ['stylestats']);
 Output StyleStats data (sample: JSON format).
 
 ```js
-var gulp = require('gulp');
-var stylestats = require('gulp-stylestats');
+const gulp = require('gulp');
+const stylestats = require('gulp-stylestats');
 
 gulp.task('stylestats', function () {
   gulp.src('./fixtures/*.css')

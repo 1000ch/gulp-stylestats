@@ -1,15 +1,17 @@
 'use strict';
 
-import fs from 'fs';
-import gutil from 'gulp-util';
-import through from 'through2';
-import StyleStats from 'stylestats';
-import Format from 'stylestats/lib/format';
+const fs = require('fs');
+const gutil = require('gulp-util');
+const through = require('through2');
+const StyleStats = require('stylestats');
+const Format = require('stylestats/lib/format');
 
-export default (options = {}) => {
+module.exports = function(options) {
+  if (!options) {
+    options = {};
+  }
 
   return through.obj(function(file, encode, callback) {
-
     if (file.isNull()) {
       this.push(file);
       return callback();
@@ -24,7 +26,6 @@ export default (options = {}) => {
     let stylestats = new StyleStats(file.path, config);
 
     stylestats.parse((error, result) => {
-
       if (error) {
         this.push(file);
         return callback(new gutil.PluginError('gulp-stylestats', error, {
@@ -66,7 +67,7 @@ export default (options = {}) => {
           break;
       }
 
-      format[method]((data) => {
+      format[method](data => {
         if (options.outfile) {
           file.contents = new Buffer(data);
           file.path = gutil.replaceExtension(file.path, extension);
