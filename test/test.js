@@ -12,7 +12,7 @@ describe('gulp-stylestats', function () {
     let stream = stylestats();
     let fp = path.join(__dirname, 'fixtures/test.css');
 
-    stream.on('data', function (newFile) {
+    stream.on('data', function (file) {
       count++;
     });
 
@@ -33,6 +33,65 @@ describe('gulp-stylestats', function () {
     let count = 0;
     let stream = stylestats({
       outfile: true
+    });
+    let fp = path.join(__dirname, 'fixtures/test.css');
+    let dest = path.join(__dirname, 'fixtures/test.txt');
+
+    stream.on('data', function (file) {
+      count++;
+      assert.equal(file.path, dest);
+    });
+
+    stream.on('end', function (error) {
+      assert.strictEqual(count, 1);
+      done();
+    });
+
+    stream.write(new gutil.File({
+      path: fp,
+      contents: fs.readFileSync(fp)
+    }));
+
+    stream.end();
+  });
+
+  it('should create css statistics with config', function (done) {
+    let count = 0;
+    let stream = stylestats({
+      outfile: true,
+      published: false,
+      paths: false,
+      stylesheets: false,
+      styleElements: false,
+      size: false,
+      dataUriSize: false,
+      ratioOfDataUriSize: false,
+      gzippedSize: false,
+      simplicity: false,
+      rules: false,
+      selectors: false,
+      declarations: false,
+      averageOfIdentifier: false,
+      mostIdentifier: false,
+      mostIdentifierSelector: false,
+      averageOfCohesion: false,
+      lowestCohesion: false,
+      lowestCohesionSelector: false,
+      totalUniqueFontSizes: false,
+      uniqueFontSizes: false,
+      totalUniqueFontFamilies: false,
+      uniqueFontFamilies: false,
+      totalUniqueColors: false,
+      uniqueColors: false,
+      totalUniqueBackgroundImages: false,
+      uniqueBackgroundImages: false,
+      idSelectors: false,
+      universalSelectors: false,
+      unqualifiedAttributeSelectors: false,
+      userSpecifiedSelectors: false,
+      importantKeywords: false,
+      floatProperties: false,
+      mediaQueries: false
     });
     let fp = path.join(__dirname, 'fixtures/test.css');
     let dest = path.join(__dirname, 'fixtures/test.txt');

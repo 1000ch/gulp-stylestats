@@ -22,8 +22,7 @@ module.exports = function(options) {
       return callback();
     }
 
-    let config = options.config;
-    let stylestats = new StyleStats(file.path, config);
+    let stylestats = new StyleStats(file.path, options);
 
     stylestats.parse((error, result) => {
       if (error) {

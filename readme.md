@@ -25,7 +25,9 @@ const stylestats = require('gulp-stylestats');
 
 gulp.task('stylestats', function () {
   gulp.src('./fixtures/*.css')
-    .pipe(stylestats());
+    .pipe(stylestats({
+      /* some stylestats options */
+    }));
 });
 
 gulp.task('default', ['stylestats']);
@@ -42,6 +44,7 @@ gulp.task('stylestats', function () {
     .pipe(stylestats({
       type: 'json',
       outfile: true
+      /* and some stylestats options */
     }))
     .pipe(gulp.dest('./stats/'));
 });
