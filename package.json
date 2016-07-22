@@ -2,10 +2,7 @@
   "name": "gulp-stylestats",
   "description": "Gulp plugin for StyleStats",
   "version": "1.2.1",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/1000ch/gulp-stylestats.git"
-  },
+  "repository": "1000ch/gulp-stylestats",
   "bugs": {
     "url": "https://github.com/1000ch/gulp-stylestats/issues"
   },
