@@ -3,19 +3,12 @@
   "description": "Gulp plugin for StyleStats",
   "version": "2.0.1",
   "repository": "1000ch/gulp-stylestats",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/1000ch/gulp-stylestats/issues"
   },
   "scripts": {
-    "test": "ava"
-  },
-  "dependencies": {
-    "gulp-util": "^3.0.7",
-    "stylestats": "^7.0.0",
-    "through2": "^2.0.0"
-  },
-  "devDependencies": {
-    "ava": "^0.17.0"
+    "test": "xo && ava"
   },
   "keywords": [
     "gulpplugin",
@@ -29,7 +22,18 @@
     "web": "http://github.com/1000ch"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
-  "license": "MIT"
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "stylestats": "^7.0.0",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "space": 2
+  }
 }

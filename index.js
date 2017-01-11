@@ -1,12 +1,11 @@
 'use strict';
 
-const fs = require('fs');
 const gutil = require('gulp-util');
 const through = require('through2');
 const StyleStats = require('stylestats');
 const Format = require('stylestats/lib/format');
 
-module.exports = (options = {}) => through.obj(function(file, encode, callback) {
+module.exports = (options = {}) => through.obj(function (file, encode, callback) {
   if (file.isNull()) {
     this.push(file);
     return callback();
@@ -50,9 +49,9 @@ module.exports = (options = {}) => through.obj(function(file, encode, callback) 
       this.push(file);
       callback();
     });
-  }).catch(error => {
+  }).catch(err => {
     this.push(file);
-    callback(new gutil.PluginError('gulp-stylestats', error, {
+    callback(new gutil.PluginError('gulp-stylestats', err, {
       fileName: file.path
     }));
   });

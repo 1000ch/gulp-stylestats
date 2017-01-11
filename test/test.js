@@ -10,11 +10,11 @@ test.cb('should log css statistics', t => {
   let stream = stylestats();
   let fp = `${__dirname}/fixtures/test.css`;
 
-  stream.on('data', file => {
+  stream.on('data', () => {
     count++;
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -40,7 +40,7 @@ test.cb('should create css statistics', t => {
     t.is(file.path, dest);
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -99,7 +99,7 @@ test.cb('should create css statistics with config', t => {
     t.is(file.path, dest);
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -118,11 +118,11 @@ test.cb('should log multiple css statistics', t => {
   let fp1 = `${__dirname}/fixtures/test.css`;
   let fp2 = `${__dirname}/fixtures/kite.css`;
 
-  stream.on('data', newFile => {
+  stream.on('data', () => {
     count++;
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 2);
     t.end();
   });
@@ -147,11 +147,11 @@ test.cb('should log css statistics as JSON', t => {
   });
   let fp = `${__dirname}/fixtures/test.css`;
 
-  stream.on('data', newFile => {
+  stream.on('data', () => {
     count++;
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -178,7 +178,7 @@ test.cb('should create css statistics as JSON', t => {
     t.is(file.path, dest);
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -198,11 +198,11 @@ test.cb('should log css statistics as CSV', t => {
   });
   let fp = `${__dirname}/fixtures/test.css`;
 
-  stream.on('data', newFile => {
+  stream.on('data', () => {
     count++;
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
@@ -229,7 +229,7 @@ test.cb('should create css statistics as CSV', t => {
     t.is(file.path, dest);
   });
 
-  stream.on('end', error => {
+  stream.on('end', () => {
     t.is(count, 1);
     t.end();
   });
