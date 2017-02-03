@@ -1,7 +1,7 @@
 {
   "name": "gulp-stylestats",
   "description": "Gulp plugin for StyleStats",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "repository": "1000ch/gulp-stylestats",
   "license": "MIT",
   "bugs": {
