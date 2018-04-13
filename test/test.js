@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const test = require('ava');
-const gutil = require('gulp-util');
+const Vinyl = require('vinyl');
 const stylestats = require('../');
 
 test.cb('should log css statistics', t => {
@@ -20,7 +20,7 @@ test.cb('should log css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -46,7 +46,7 @@ test.cb('should create css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -105,7 +105,7 @@ test.cb('should create css statistics with config', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -128,12 +128,12 @@ test.cb('should log multiple css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp1,
     contents: fs.readFileSync(fp1)
   }));
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp2,
     contents: fs.readFileSync(fp2)
   }));
@@ -157,7 +157,7 @@ test.cb('should log css statistics as JSON', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -184,7 +184,7 @@ test.cb('should create css statistics as JSON', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -208,7 +208,7 @@ test.cb('should log css statistics as CSV', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -235,7 +235,7 @@ test.cb('should create css statistics as CSV', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
