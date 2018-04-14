@@ -1,8 +1,9 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const test = require('ava');
-const gutil = require('gulp-util');
+const Vinyl = require('vinyl');
 const stylestats = require('../');
 
 test.cb('should log css statistics', t => {
@@ -19,7 +20,7 @@ test.cb('should log css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -32,8 +33,8 @@ test.cb('should create css statistics', t => {
   let stream = stylestats({
     outfile: true
   });
-  let fp = `${__dirname}/fixtures/test.css`;
-  let dest = `${__dirname}/fixtures/test.txt`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
+  let dest = path.join(__dirname, '/fixtures/test.txt');
 
   stream.on('data', file => {
     count++;
@@ -45,7 +46,7 @@ test.cb('should create css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -91,8 +92,8 @@ test.cb('should create css statistics with config', t => {
     floatProperties: false,
     mediaQueries: false
   });
-  let fp = `${__dirname}/fixtures/test.css`;
-  let dest = `${__dirname}/fixtures/test.txt`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
+  let dest = path.join(__dirname, '/fixtures/test.txt');
 
   stream.on('data', file => {
     count++;
@@ -104,7 +105,7 @@ test.cb('should create css statistics with config', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -115,8 +116,8 @@ test.cb('should create css statistics with config', t => {
 test.cb('should log multiple css statistics', t => {
   let count = 0;
   let stream = stylestats();
-  let fp1 = `${__dirname}/fixtures/test.css`;
-  let fp2 = `${__dirname}/fixtures/kite.css`;
+  let fp1 = path.join(__dirname, '/fixtures/test.css');
+  let fp2 = path.join(__dirname, '/fixtures/kite.css');
 
   stream.on('data', () => {
     count++;
@@ -127,12 +128,12 @@ test.cb('should log multiple css statistics', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp1,
     contents: fs.readFileSync(fp1)
   }));
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp2,
     contents: fs.readFileSync(fp2)
   }));
@@ -145,7 +146,7 @@ test.cb('should log css statistics as JSON', t => {
   let stream = stylestats({
     type: 'json'
   });
-  let fp = `${__dirname}/fixtures/test.css`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
 
   stream.on('data', () => {
     count++;
@@ -156,7 +157,7 @@ test.cb('should log css statistics as JSON', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -170,8 +171,8 @@ test.cb('should create css statistics as JSON', t => {
     type: 'json',
     outfile: true
   });
-  let fp = `${__dirname}/fixtures/test.css`;
-  let dest = `${__dirname}/fixtures/test.json`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
+  let dest = path.join(__dirname, '/fixtures/test.json');
 
   stream.on('data', file => {
     count++;
@@ -183,7 +184,7 @@ test.cb('should create css statistics as JSON', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -196,7 +197,7 @@ test.cb('should log css statistics as CSV', t => {
   let stream = stylestats({
     type: 'csv'
   });
-  let fp = `${__dirname}/fixtures/test.css`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
 
   stream.on('data', () => {
     count++;
@@ -207,7 +208,7 @@ test.cb('should log css statistics as CSV', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));
@@ -221,8 +222,8 @@ test.cb('should create css statistics as CSV', t => {
     type: 'csv',
     outfile: true
   });
-  let fp = `${__dirname}/fixtures/test.css`;
-  let dest = `${__dirname}/fixtures/test.csv`;
+  let fp = path.join(__dirname, '/fixtures/test.css');
+  let dest = path.join(__dirname, '/fixtures/test.csv');
 
   stream.on('data', file => {
     count++;
@@ -234,7 +235,7 @@ test.cb('should create css statistics as CSV', t => {
     t.end();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     path: fp,
     contents: fs.readFileSync(fp)
   }));

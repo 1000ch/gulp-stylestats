@@ -1,6 +1,7 @@
 'use strict';
 
-const gutil = require('gulp-util');
+const PluginError = require('plugin-error');
+const replaceExt = require('replace-ext');
 const through = require('through2');
 const StyleStats = require('stylestats');
 const Format = require('stylestats/lib/format');
@@ -12,7 +13,7 @@ module.exports = (options = {}) => through.obj(function (file, encode, callback)
   }
 
   if (file.isStream()) {
-    this.emit('error', new gutil.PluginError('gulp-stylestats', 'Streaming is not supported'));
+    this.emit('error', new PluginError('gulp-stylestats', 'Streaming is not supported'));
     return callback();
   }
 
@@ -41,7 +42,7 @@ module.exports = (options = {}) => through.obj(function (file, encode, callback)
     Promise.resolve(format[method]()).then(data => {
       if (options.outfile) {
         file.contents = new Buffer(data);
-        file.path = gutil.replaceExtension(file.path, extension);
+        file.path = replaceExt(file.path, extension);
       } else {
         console.log(data);
       }
@@ -51,7 +52,7 @@ module.exports = (options = {}) => through.obj(function (file, encode, callback)
     });
   }).catch(err => {
     this.push(file);
-    callback(new gutil.PluginError('gulp-stylestats', err, {
+    callback(new PluginError('gulp-stylestats', err, {
       fileName: file.path
     }));
   });
