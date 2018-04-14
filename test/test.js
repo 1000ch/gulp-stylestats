@@ -4,12 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const test = require('ava');
 const Vinyl = require('vinyl');
-const stylestats = require('../');
+const stylestats = require('..');
 
 test.cb('should log css statistics', t => {
   let count = 0;
-  let stream = stylestats();
-  let fp = `${__dirname}/fixtures/test.css`;
+  const stream = stylestats();
+  const fp = `${__dirname}/fixtures/test.css`;
 
   stream.on('data', () => {
     count++;
@@ -30,11 +30,11 @@ test.cb('should log css statistics', t => {
 
 test.cb('should create css statistics', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     outfile: true
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
-  let dest = path.join(__dirname, '/fixtures/test.txt');
+  const fp = path.join(__dirname, '/fixtures/test.css');
+  const dest = path.join(__dirname, '/fixtures/test.txt');
 
   stream.on('data', file => {
     count++;
@@ -56,7 +56,7 @@ test.cb('should create css statistics', t => {
 
 test.cb('should create css statistics with config', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     outfile: true,
     published: false,
     paths: false,
@@ -92,8 +92,8 @@ test.cb('should create css statistics with config', t => {
     floatProperties: false,
     mediaQueries: false
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
-  let dest = path.join(__dirname, '/fixtures/test.txt');
+  const fp = path.join(__dirname, '/fixtures/test.css');
+  const dest = path.join(__dirname, '/fixtures/test.txt');
 
   stream.on('data', file => {
     count++;
@@ -115,9 +115,9 @@ test.cb('should create css statistics with config', t => {
 
 test.cb('should log multiple css statistics', t => {
   let count = 0;
-  let stream = stylestats();
-  let fp1 = path.join(__dirname, '/fixtures/test.css');
-  let fp2 = path.join(__dirname, '/fixtures/kite.css');
+  const stream = stylestats();
+  const fp1 = path.join(__dirname, '/fixtures/test.css');
+  const fp2 = path.join(__dirname, '/fixtures/kite.css');
 
   stream.on('data', () => {
     count++;
@@ -143,10 +143,10 @@ test.cb('should log multiple css statistics', t => {
 
 test.cb('should log css statistics as JSON', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     type: 'json'
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
+  const fp = path.join(__dirname, '/fixtures/test.css');
 
   stream.on('data', () => {
     count++;
@@ -167,12 +167,12 @@ test.cb('should log css statistics as JSON', t => {
 
 test.cb('should create css statistics as JSON', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     type: 'json',
     outfile: true
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
-  let dest = path.join(__dirname, '/fixtures/test.json');
+  const fp = path.join(__dirname, '/fixtures/test.css');
+  const dest = path.join(__dirname, '/fixtures/test.json');
 
   stream.on('data', file => {
     count++;
@@ -194,10 +194,10 @@ test.cb('should create css statistics as JSON', t => {
 
 test.cb('should log css statistics as CSV', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     type: 'csv'
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
+  const fp = path.join(__dirname, '/fixtures/test.css');
 
   stream.on('data', () => {
     count++;
@@ -218,12 +218,12 @@ test.cb('should log css statistics as CSV', t => {
 
 test.cb('should create css statistics as CSV', t => {
   let count = 0;
-  let stream = stylestats({
+  const stream = stylestats({
     type: 'csv',
     outfile: true
   });
-  let fp = path.join(__dirname, '/fixtures/test.css');
-  let dest = path.join(__dirname, '/fixtures/test.csv');
+  const fp = path.join(__dirname, '/fixtures/test.css');
+  const dest = path.join(__dirname, '/fixtures/test.csv');
 
   stream.on('data', file => {
     count++;

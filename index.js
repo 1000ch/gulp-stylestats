@@ -17,10 +17,10 @@ module.exports = (options = {}) => through.obj(function (file, encode, callback)
     return callback();
   }
 
-  let stylestats = new StyleStats(file.path, options);
+  const stylestats = new StyleStats(file.path, options);
 
   stylestats.parse().then(result => {
-    let format = new Format(result);
+    const format = new Format(result);
     let extension;
     let method;
 
@@ -41,7 +41,7 @@ module.exports = (options = {}) => through.obj(function (file, encode, callback)
 
     Promise.resolve(format[method]()).then(data => {
       if (options.outfile) {
-        file.contents = new Buffer(data);
+        file.contents = Buffer.from(data);
         file.path = replaceExt(file.path, extension);
       } else {
         console.log(data);
